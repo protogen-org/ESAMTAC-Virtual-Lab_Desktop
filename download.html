@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download - ESAMTAC Virtual Training Lab</title>
+    <style>
+        /* 1. Base Reset and Box Sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Define new color variables based on the provided image and user request */
+        :root {
+            --color-primary: #1A3644;       /* NEW: Darkest Blue for main accents, buttons, and headings */
+            --color-secondary: #3683A3;     /* Teal/Blue background color, used for subtle button hover */
+            --color-background-dark: #3683A3; /* Teal/Blue from image for page background */
+            --color-text-dark: #1A3644;     /* Darkest Blue for body text inside the container */
+            --color-text-subtle: #6c757d;   /* Muted grey remains for secondary text */
+            --color-white: #FFFFFF;
+        }
+
+        /* 2. Body and Overall Background - Simpler, Darker, Richer */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-background-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            position: relative;
+            overflow: hidden;
+            padding: 40px 20px;
+        }
+
+        /* Subtle background texture */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        /* 3. Main Container - Clean White for Readability */
+        .container {
+            background: rgba(255, 255, 255, 1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.2),
+                0 1px 1px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            max-width: 550px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+            color: var(--color-text-dark);
+        }
+
+        .container::before {
+            content: none;
+        }
+
+        .logo {
+            width: 500px;
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* 8. Help Button - Uses the darkest blue */
+        .help-button {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(26, 54, 68, 0.4);
+            margin-top: 20px;
+        }
+
+        .help-button:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 54, 68, 0.6);
+        }
+
+        .help-button:active {
+            transform: translateY(0);
+        }
+
+        /* 5. Headings and Text */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background-clip: unset;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--color-text-subtle);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .download-section {
+            margin-bottom: 2rem;
+        }
+
+        /* 4. Primary Button Style - Uses the darkest blue */
+        .download-btn {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 1.25rem 3rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 20px rgba(26, 54, 68, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--color-secondary);
+            border-radius: 50px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .download-btn:hover::before {
+            opacity: 1;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(26, 54, 68, 0.6);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 6. Info Blocks (OS Info & Mobile Message) - Updated colors */
+        .mobile-message {
+            background: #ffe0b2;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 160, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-message h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: #ff8c00;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background-clip: unset;
+            font-weight: 700;
+        }
+
+        .mobile-message p {
+            color: var(--color-text-dark);
+            line-height: 1.6;
+        }
+
+        .os-info {
+            background: #f1f7fe;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            border: 1px solid rgba(26, 54, 68, 0.2);
+        }
+
+        /* 7. Other Downloads Section - Uses the darkest blue on hover */
+        .other-downloads {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .other-downloads h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-dark);
+            font-weight: 600;
+        }
+
+        .download-links {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-link {
+            background: #f8f9fa;
+            color: var(--color-text-dark);
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #ced4da;
+        }
+
+        .download-link:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 54, 68, 0.3);
+            border-color: var(--color-primary);
+        }
+
+        .toggle-btn {
+            background: #e9ecef;
+            color: var(--color-text-dark);
+            border: 1px solid #adb5bd;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 15px rgba(26, 54, 68, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .download-btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .download-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .help-button {
+                position: static;
+                margin-bottom: 10px;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <img src="https://rawcdn.githack.com/mneuffer-protogen/temporaryHelpPage/2963deb8cb92c2c9dd488cb021ef5dfdc814a472/logo-KO-2500.png" alt="ProtoGen Logo" class="logo">
+
+        <div class="container">
+            <h1>Download ESAMTAC Virtual Training Lab</h1>
+            <p class="subtitle">Get the latest version for your device</p>
+
+            <div class="os-info" id="osInfo"></div>
+
+            <div class="download-section" id="downloadSection"></div>
+
+            <div class="other-downloads">
+                <button class="toggle-btn" id="toggleBtn" onclick="toggleOtherDownloads()">
+                    Show Other Downloads
+                </button>
+                <div id="otherDownloads" class="hidden">
+                    <h3>All Download Options</h3>
+                    <div class="download-links">
+                        <a href="#" class="download-link" onclick="downloadFile('windows'); return false;">Windows (x64)</a>
+                        <a href="#" class="download-link" onclick="downloadFile('mac-intel'); return false;">Mac (Intel)</a>
+                        <a href="#" class="download-link" onclick="downloadFile('mac-silicon'); return false;">Mac (Apple Silicon)</a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://mneuffer-protogen.github.io/temporaryHelpPage/" target="_blank" class="help-button">
+                FAQ / Help
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // OS Detection
+        function detectOS() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const platform = navigator.platform.toLowerCase();
+
+            // Mobile detection (check first as mobile can report various platforms)
+            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent)) {
+                return 'mobile';
+            }
+
+            // Windows detection
+            if (platform.includes('win') || userAgent.includes('windows')) {
+                return 'windows';
+            }
+
+            // Mac detection with Apple Silicon check
+            if (platform.includes('mac') || userAgent.includes('macintosh')) {
+                // Detect Apple Silicon using multiple methods
+                const hasAppleSilicon = 
+                    userAgent.includes('mac os x') && navigator.maxTouchPoints > 1 ||
+                    /mac.*arm/i.test(userAgent);
+                
+                return hasAppleSilicon ? 'mac-silicon' : 'mac-intel';
+            }
+
+            // Linux detection
+            if (platform.includes('linux') || userAgent.includes('linux')) {
+                return 'linux';
+            }
+
+            return 'unknown';
+        }
+
+        // Download function
+        function downloadFile(osType) {
+            const downloads = {
+                'windows': 'https://github.com/protogen-org/ESAMTAC-Virtual-Lab_Desktop/releases/download/3%2F25%2F26/ESAMTAC_Installer.exe',
+                'mac-intel': 'https://example.com/download/mac-intel/app-intel.dmg',
+                'mac-silicon': 'https://example.com/download/mac-silicon/app-silicon.dmg',
+            };
+
+            // For Windows, directly open the GitHub release link
+            if (osType === 'windows') {
+                window.open(downloads[osType], '_blank');
+            } else {
+                // For other platforms, show placeholder message
+                alert(`Download for ${osType} coming soon!\nURL: ${downloads[osType]}`);
+            }
+        }
+
+        // Toggle other downloads visibility
+        function toggleOtherDownloads() {
+            const otherDownloads = document.getElementById('otherDownloads');
+            const toggleBtn = document.getElementById('toggleBtn');
+
+            if (otherDownloads.classList.contains('hidden')) {
+                otherDownloads.classList.remove('hidden');
+                toggleBtn.textContent = 'Hide Other Downloads';
+            } else {
+                otherDownloads.classList.add('hidden');
+                toggleBtn.textContent = 'Show Other Downloads';
+            }
+        }
+
+        // Initialize page
+        function initializePage() {
+            const os = detectOS();
+            const osInfo = document.getElementById('osInfo');
+            const downloadSection = document.getElementById('downloadSection');
+
+            // Display OS info
+            const osNames = {
+                'windows': 'Windows',
+                'mac-intel': 'macOS (Intel)',
+                'mac-silicon': 'macOS (Apple Silicon)',
+                'mobile': 'Mobile Device',
+                'linux': 'Linux',
+                'unknown': 'Unknown OS'
+            };
+
+            osInfo.textContent = `Detected: ${osNames[os]}`;
+
+            // Create appropriate download section
+            if (os === 'mobile') {
+                downloadSection.innerHTML = `
+                    <div class="mobile-message">
+                        <h2>Mobile Device Detected</h2>
+                        <p>Please visit this page on a computer to download the desktop application.</p>
+                    </div>
+                `;
+            } else if (os === 'windows') {
+                downloadSection.innerHTML = `
+                    <button class="download-btn" onclick="downloadFile('windows')">
+                        Download for Windows
+                    </button>
+                `;
+            } else if (os === 'mac-intel') {
+                downloadSection.innerHTML = `
+                    <button class="download-btn" onclick="downloadFile('mac-intel')">
+                        Download for Mac (Intel)
+                    </button>
+                `;
+            } else if (os === 'mac-silicon') {
+                downloadSection.innerHTML = `
+                    <button class="download-btn" onclick="downloadFile('mac-silicon')">
+                        Download for Mac (Apple Silicon)
+                    </button>
+                `;
+            } else {
+                downloadSection.innerHTML = `
+                    <div class="mobile-message">
+                        <h2>Unknown Operating System</h2>
+                        <p>We couldn't detect your operating system. Please select from the options below.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
